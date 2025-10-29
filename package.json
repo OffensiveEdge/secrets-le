@@ -1,0 +1,327 @@
+{
+	"name": "secrets-le",
+	"publisher": "nolindnaidoo",
+	"displayName": "Secrets-LE",
+	"description": "Zero-Hassle Secrets Detection & Sanitization - Detect and sanitize credentials, tokens, and API keys locally — before you commit. GitGuardian-level security without ever sending data off your machine.",
+	"version": "0.1.0",
+	"license": "MIT",
+	"author": {
+		"name": "OffensiveEdge",
+		"url": "https://github.com/OffensiveEdge"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/OffensiveEdge/secrets-le.git"
+	},
+	"bugs": {
+		"url": "https://github.com/OffensiveEdge/secrets-le/issues"
+	},
+	"homepage": "https://github.com/OffensiveEdge/secrets-le#readme",
+	"engines": {
+		"vscode": "^1.70.0",
+		"node": ">=20.0.0"
+	},
+	"categories": [
+		"Other",
+		"Programming Languages",
+		"Linters",
+		"Security"
+	],
+	"keywords": [
+		"secrets",
+		"secret",
+		"credentials",
+		"api-key",
+		"api",
+		"token",
+		"password",
+		"detection",
+		"sanitize",
+		"sanitization",
+		"security",
+		"gitguardian",
+		"aws",
+		"azure",
+		"gcp",
+		"private-key",
+		"jwt",
+		"oauth",
+		"detect",
+		"scan",
+		"scanner"
+	],
+	"icon": "src/assets/images/icon.png",
+	"main": "./dist/extension.js",
+	"l10n": "./package.nls.json",
+	"activationEvents": [
+		"onCommand:secrets-le.detect",
+		"onCommand:secrets-le.sanitize",
+		"onCommand:secrets-le.openSettings",
+		"onCommand:secrets-le.help",
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact",
+		"onLanguage:json",
+		"onLanguage:jsonc",
+		"onLanguage:dotenv",
+		"onLanguage:env",
+		"onLanguage:yaml",
+		"onLanguage:yml",
+		"onLanguage:toml",
+		"onLanguage:python",
+		"onLanguage:ruby",
+		"onLanguage:shellscript",
+		"onLanguage:bash",
+		"onLanguage:plaintext"
+	],
+	"capabilities": {
+		"virtualWorkspaces": {
+			"supported": "limited",
+			"description": "%manifest.capability.untrusted-workspaces.desc%"
+		},
+		"untrustedWorkspaces": {
+			"supported": "limited",
+			"description": "%manifest.capability.untrusted-workspaces.desc%"
+		}
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "secrets-le.detect",
+				"title": "%manifest.command.detect.title%",
+				"category": "%manifest.command.category%"
+			},
+			{
+				"command": "secrets-le.sanitize",
+				"title": "%manifest.command.sanitize.title%",
+				"category": "%manifest.command.category%"
+			},
+			{
+				"command": "secrets-le.openSettings",
+				"title": "%manifest.command.settings.title%",
+				"category": "%manifest.command.category%"
+			},
+			{
+				"command": "secrets-le.help",
+				"title": "%manifest.command.help.title%",
+				"category": "%manifest.command.category%"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "secrets-le.detect",
+				"key": "ctrl+alt+s",
+				"mac": "cmd+alt+s",
+				"when": "editorTextFocus"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "secrets-le.detect",
+					"when": "editorTextFocus",
+					"group": "1_modification@1"
+				},
+				{
+					"command": "secrets-le.sanitize",
+					"when": "editorTextFocus",
+					"group": "1_modification@2"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "secrets-le.detect"
+				},
+				{
+					"command": "secrets-le.sanitize"
+				},
+				{
+					"command": "secrets-le.openSettings"
+				},
+				{
+					"command": "secrets-le.help"
+				}
+			]
+		},
+		"configuration": {
+			"title": "%manifest.settings.title%",
+			"properties": {
+				"secrets-le.copyToClipboardEnabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "%manifest.settings.copy.clipboard.desc%"
+				},
+				"secrets-le.dedupeEnabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "%manifest.settings.dedupe.desc%"
+				},
+				"secrets-le.notificationsLevel": {
+					"type": "string",
+					"default": "important",
+					"enum": [
+						"all",
+						"important",
+						"silent"
+					],
+					"enumDescriptions": [
+						"%manifest.settings.notifications.level.option.all%",
+						"%manifest.settings.notifications.level.option.important%",
+						"%manifest.settings.notifications.level.option.silent%"
+					],
+					"description": "%manifest.settings.notifications.level.desc%"
+				},
+				"secrets-le.openResultsSideBySide": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.open.side-by-side.desc%"
+				},
+				"secrets-le.detection.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.detection.enabled.desc%"
+				},
+				"secrets-le.detection.sensitivity": {
+					"type": "string",
+					"default": "medium",
+					"enum": [
+						"low",
+						"medium",
+						"high"
+					],
+					"enumDescriptions": [
+						"%manifest.settings.detection.sensitivity.option.low%",
+						"%manifest.settings.detection.sensitivity.option.medium%",
+						"%manifest.settings.detection.sensitivity.option.high%"
+					],
+					"description": "%manifest.settings.detection.sensitivity.desc%"
+				},
+				"secrets-le.detection.includeApiKeys": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.detection.include.api-keys.desc%"
+				},
+				"secrets-le.detection.includePasswords": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.detection.include.passwords.desc%"
+				},
+				"secrets-le.detection.includeTokens": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.detection.include.tokens.desc%"
+				},
+				"secrets-le.detection.includePrivateKeys": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.detection.include.private-keys.desc%"
+				},
+				"secrets-le.sanitization.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.sanitization.enabled.desc%"
+				},
+				"secrets-le.sanitization.replaceWith": {
+					"type": "string",
+					"default": "***REDACTED***",
+					"description": "%manifest.settings.sanitization.replace-with.desc%"
+				},
+				"secrets-le.safety.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.safety.enabled.desc%"
+				},
+				"secrets-le.safety.fileSizeWarnBytes": {
+					"type": "number",
+					"default": 1000000,
+					"minimum": 1000,
+					"description": "%manifest.settings.safety.warn.file-size.desc%"
+				},
+				"secrets-le.safety.largeOutputLinesThreshold": {
+					"type": "number",
+					"default": 50000,
+					"minimum": 100,
+					"description": "%manifest.settings.safety.warn.large-output.desc%"
+				},
+				"secrets-le.safety.manyDocumentsThreshold": {
+					"type": "number",
+					"default": 8,
+					"minimum": 1,
+					"description": "%manifest.settings.safety.warn.many-documents.desc%"
+				},
+				"secrets-le.showParseErrors": {
+					"type": "boolean",
+					"default": false,
+					"description": "%manifest.settings.parse-errors.desc%"
+				},
+				"secrets-le.statusBar.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.statusbar.enabled.desc%"
+				},
+				"secrets-le.telemetryEnabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "%manifest.settings.telemetry.desc%"
+				},
+				"secrets-le.performance.enabled": {
+					"type": "boolean",
+					"default": true,
+					"description": "%manifest.settings.performance.enabled.desc%"
+				},
+				"secrets-le.performance.maxDuration": {
+					"type": "number",
+					"default": 5000,
+					"minimum": 1000,
+					"description": "%manifest.settings.performance.max-duration.desc%"
+				},
+				"secrets-le.performance.maxMemoryUsage": {
+					"type": "number",
+					"default": 104857600,
+					"minimum": 1048576,
+					"description": "%manifest.settings.performance.max-memory.desc%"
+				},
+				"secrets-le.performance.maxCpuUsage": {
+					"type": "number",
+					"default": 1000000,
+					"minimum": 100000,
+					"description": "%manifest.settings.performance.max-cpu.desc%"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"build": "tsc -p ./",
+		"clean": "rm -rf dist coverage",
+		"clean:i18n": "node -e \"const fs=require('fs');fs.readdirSync('.').filter(f=>f.startsWith('package.nls.')&&f.endsWith('.json')&&f!=='package.nls.json').forEach(f=>fs.unlinkSync(f));try{fs.rmSync('vsix',{recursive:true})}catch(e){}\"",
+		"copy:i18n": "cp src/i18n/package.nls*.json . 2>/dev/null || true",
+		"watch": "tsc -watch -p ./",
+		"test": "vitest run --pool=threads",
+		"test:watch": "vitest --pool=threads",
+		"test:coverage": "vitest run --coverage --pool=threads",
+		"test:ui": "vitest --ui",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"vscode:prepublish": "bun run build && bun run copy:i18n",
+		"package": "bun run copy:i18n && mkdir -p release && bun x vsce package --out release/${npm_package_name}-${npm_package_version}.vsix && bun run clean:i18n",
+		"package:ls": "vsce ls release/${npm_package_name}-${npm_package_version}.vsix --tree | cat",
+		"publish": "vsce publish"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.5",
+		"@types/node": "^24.7.1",
+		"@types/vscode": "^1.70.0",
+		"@vscode/test-electron": "^2.3.0",
+		"@vscode/vsce": "^3.6.2",
+		"@vitest/coverage-v8": "^3.2.4",
+		"@vitest/ui": "^3.2.4",
+		"tsx": "^4.20.6",
+		"typescript": "^5.9.3",
+		"vitest": "^3.2.4"
+	},
+	"dependencies": {
+		"vscode-nls": "^5.2.0"
+	}
+}
+

@@ -1,0 +1,27 @@
+# Sample File for Testing
+
+This is a sample file to test the extraction functionality.
+
+## Example Content
+
+Here are some "quoted strings" that the sample extractor will find:
+
+- "Hello, World!"
+- 'Single quotes work too'
+- "Another example string"
+
+The sample extractor uses a simple regex to find quoted strings.
+Replace this with your actual test data once you customize the template.
+
+## Testing Instructions
+
+1. Open this file in VS Code
+2. Run the "Extract Items" command (Cmd/Ctrl+Alt+E)
+3. View the results in a new document
+
+## Next Steps
+
+- Replace the extraction logic in `src/extraction/extract.ts`
+- Add your own format-specific extractors in `src/extraction/formats/`
+- Update this sample file with relevant test data
+
