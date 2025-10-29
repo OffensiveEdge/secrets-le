@@ -1,0 +1,33 @@
+# Sample Docker Compose file for Secrets-LE testing
+# NOTE: These are SAFE EXAMPLE PATTERNS only - not real secrets
+
+version: '3.8'
+
+services:
+  app:
+    image: myapp:latest
+    environment:
+      - API_KEY=sk_live_EXAMPLE_TEST_PATTERN_abcd1234efgh5678
+      - DATABASE_PASSWORD=mysecretpassword123
+      - AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+      - AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    secrets:
+      - db_password
+      - api_key
+
+  database:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: mysecretpassword123
+      POSTGRES_DB: mydb
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+secrets:
+  db_password:
+    value: mysecretpassword123
+  api_key:
+    value: sk_live_EXAMPLE_TEST_PATTERN_abcd1234efgh5678
+

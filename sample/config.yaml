@@ -1,0 +1,47 @@
+# Sample YAML file for Secrets-LE testing
+# NOTE: These are SAFE EXAMPLE PATTERNS only - not real secrets
+
+application:
+  name: MyApplication
+  version: "1.0.0"
+  port: 8080
+
+# API Configuration
+api:
+  url: https://api.example.com/v1
+  key: sk_live_EXAMPLE_TEST_PATTERN_DO_NOT_USE_12345
+  secret: sk_test_EXAMPLE_TEST_PATTERN_DO_NOT_USE_12345
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.example
+
+# AWS Credentials
+aws:
+  region: us-east-1
+  accessKeyId: AKIAIOSFODNN7EXAMPLE
+  secretAccessKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+# Database Configuration
+database:
+  host: localhost
+  port: 5432
+  name: mydb
+  user: admin
+  password: mysecretpassword123
+  url: postgresql://admin:secretpass123@localhost:5432/mydb
+
+# GitHub Token
+github:
+  token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Kubernetes Secrets (example format)
+secrets:
+  jwt-secret:
+    type: Opaque
+    data:
+      password: cGFzc3dvcmQxMjM=  # base64 encoded "password123"
+      api-key: c2sgbGl2ZV9leGFtcGxl  # base64 encoded example
+
+# Authentication
+auth:
+  jwtSecret: my_jwt_secret_key_1234567890abcdef
+  oauthToken: ya29.a0AfH6SMBx...example...token
+

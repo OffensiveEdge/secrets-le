@@ -1,0 +1,44 @@
+# Sample Kubernetes file for Secrets-LE testing
+# NOTE: These are SAFE EXAMPLE PATTERNS only - not real secrets
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+type: Opaque
+data:
+  # Base64 encoded secrets (decode: echo "value" | base64)
+  api-key: c2sgbGl2ZV9hYmNkMTIzNGVmZ2g1Njc4  # sk_live_abcd1234efgh5678
+  password: cGFzc3dvcmQxMjM=  # password123
+  database-url: cG9zdGdyZXNxbDovL2FkbWluOnNlY3JldHBhc3MxMjNAbG9jYWxob3N0OjU0MzIvbXlkYg==  # postgresql://admin:secretpass123@localhost:5432/mydb
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  api_url: https://api.example.com/v1
+  aws_region: us-east-1
+  # Note: Sometimes secrets accidentally end up in ConfigMaps
+  aws_access_key: AKIAIOSFODNN7EXAMPLE
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        env:
+        - name: API_KEY
+          value: sk_live_EXAMPLE_TEST_PATTERN_DO_NOT_USE_12345
+        - name: DATABASE_PASSWORD
+          value: mysecretpassword123
+        envFrom:
+        - secretRef:
+            name: app-secrets
+
