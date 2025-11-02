@@ -211,8 +211,8 @@ describe('Sample Files Integration', () => {
 	});
 
 	describe('Markdown files', () => {
-		it('should detect example secrets in readme.md', () => {
-			const content = readSampleFile('readme.md');
+		it('should detect example secrets in README.md', () => {
+			const content = readSampleFile('README.md');
 			const result = detectSecretsInContent(content, {
 				includeApiKeys: true,
 				sensitivity: 'medium',
