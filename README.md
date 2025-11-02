@@ -242,6 +242,8 @@ For the complete list of available settings, open VS Code Settings and search fo
 
 Secrets-LE includes built-in performance monitoring and configurable thresholds to help track operation speed and resource usage.
 
+For detailed information, see [Performance Monitoring](docs/PERFORMANCE.md).
+
 ## 🔧 Troubleshooting
 
 **Not detecting secrets?**  
@@ -271,12 +273,18 @@ High accuracy with configurable sensitivity to reduce false positives
 
 **17 unit tests across 1 test file** • Powered by Vitest • Run with `bun run test:coverage`
 
+### Core Principle
+
+**No broken or failed tests are allowed in commits.** All tests must pass before code can be committed or merged.
+
 ### Test Suite Highlights
 
 - **Comprehensive secret detection** across 15+ types
 - **Sanitization validation** with replacement verification
 - **Error handling** with graceful degradation
 - **Security-focused** testing for edge cases
+
+For detailed testing guidelines, see [Testing Guidelines](docs/TESTING.md).
 
 ---
 
