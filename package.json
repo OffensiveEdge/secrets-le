@@ -1,6 +1,6 @@
 {
 	"name": "secrets-le",
-	"publisher": "nolindnaidoo",
+	"publisher": "OffensiveEdge",
 	"displayName": "%manifest.ext.name%",
 	"description": "%manifest.ext.description%",
 	"version": "1.7.1",
