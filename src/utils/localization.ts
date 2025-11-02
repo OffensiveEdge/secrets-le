@@ -18,7 +18,7 @@ export function createLocalizer(): Localizer {
 	return Object.freeze({
 		localize(key: string, ...args: readonly unknown[]): string {
 			// TypeScript strict mode requires explicit cast for spread operator
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			// biome-ignore lint/suspicious/noExplicitAny: vscode-nls requires any for spread args
 			return (localize as any)(key, ...args);
 		},
 	});
