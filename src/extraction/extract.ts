@@ -199,44 +199,104 @@ export function formatDetectionResults(result: DetectionResult): string {
 		lines.push(`⚠️ Found ${result.secrets.length} potential secret(s):`);
 		lines.push('');
 
-		// Group by type
-		const byType = new Map<string, DetectedSecret[]>();
-		for (const secret of result.secrets) {
-			const existing = byType.get(secret.type) ?? [];
-			existing.push(secret);
-			byType.set(secret.type, existing);
-		}
+		// Group by filepath (if workspace scan) or by type (if single file)
+		const hasFilePaths = result.secrets.some((s) => s.filepath);
+		
+		if (hasFilePaths) {
+			// Group by filepath first, then by type
+			const byFile = new Map<string, DetectedSecret[]>();
+			for (const secret of result.secrets) {
+				const filepath = secret.filepath ?? '<unknown>';
+				const existing = byFile.get(filepath) ?? [];
+				existing.push(secret);
+				byFile.set(filepath, existing);
+			}
 
-		for (const [type, secrets] of byType.entries()) {
-			lines.push(`## ${type.toUpperCase()} (${secrets.length})`);
-			lines.push('');
-
-			for (const secret of secrets) {
-				if (secret.position) {
-					lines.push(
-						`- Line ${secret.position.line}, Column ${secret.position.column}`,
-					);
-				} else {
-					lines.push('- Found');
-				}
-				if (secret.key) {
-					lines.push(`  Key: ${secret.key}`);
-				}
-				if (secret.description) {
-					lines.push(`  Type: ${secret.description}`);
-				}
-				lines.push(`  Confidence: ${secret.confidence}`);
-				lines.push(
-					`  Value: ${secret.value.substring(0, 20)}${secret.value.length > 20 ? '...' : ''}`,
-				);
-				if (secret.context) {
-					lines.push(
-						`  Context: ${secret.context.substring(0, 80)}${
-							secret.context.length > 80 ? '...' : ''
-						}`,
-					);
-				}
+			for (const [filepath, fileSecrets] of byFile.entries()) {
+				lines.push(`## 📄 ${filepath} (${fileSecrets.length} secret(s))`);
 				lines.push('');
+
+				// Group secrets in this file by type
+				const byType = new Map<string, DetectedSecret[]>();
+				for (const secret of fileSecrets) {
+					const existing = byType.get(secret.type) ?? [];
+					existing.push(secret);
+					byType.set(secret.type, existing);
+				}
+
+				for (const [type, secrets] of byType.entries()) {
+					lines.push(`### ${type.toUpperCase()} (${secrets.length})`);
+					lines.push('');
+
+					for (const secret of secrets) {
+						if (secret.position) {
+							lines.push(
+								`- Line ${secret.position.line}, Column ${secret.position.column}`,
+							);
+						} else {
+							lines.push('- Found');
+						}
+						if (secret.key) {
+							lines.push(`  Key: ${secret.key}`);
+						}
+						if (secret.description) {
+							lines.push(`  Type: ${secret.description}`);
+						}
+						lines.push(`  Confidence: ${secret.confidence}`);
+						lines.push(
+							`  Value: ${secret.value.substring(0, 20)}${secret.value.length > 20 ? '...' : ''}`,
+						);
+						if (secret.context) {
+							lines.push(
+								`  Context: ${secret.context.substring(0, 80)}${
+									secret.context.length > 80 ? '...' : ''
+								}`,
+							);
+						}
+						lines.push('');
+					}
+				}
+			}
+		} else {
+			// Group by type (single file mode)
+			const byType = new Map<string, DetectedSecret[]>();
+			for (const secret of result.secrets) {
+				const existing = byType.get(secret.type) ?? [];
+				existing.push(secret);
+				byType.set(secret.type, existing);
+			}
+
+			for (const [type, secrets] of byType.entries()) {
+				lines.push(`## ${type.toUpperCase()} (${secrets.length})`);
+				lines.push('');
+
+				for (const secret of secrets) {
+					if (secret.position) {
+						lines.push(
+							`- Line ${secret.position.line}, Column ${secret.position.column}`,
+						);
+					} else {
+						lines.push('- Found');
+					}
+					if (secret.key) {
+						lines.push(`  Key: ${secret.key}`);
+					}
+					if (secret.description) {
+						lines.push(`  Type: ${secret.description}`);
+					}
+					lines.push(`  Confidence: ${secret.confidence}`);
+					lines.push(
+						`  Value: ${secret.value.substring(0, 20)}${secret.value.length > 20 ? '...' : ''}`,
+					);
+					if (secret.context) {
+						lines.push(
+							`  Context: ${secret.context.substring(0, 80)}${
+								secret.context.length > 80 ? '...' : ''
+							}`,
+						);
+					}
+					lines.push('');
+				}
 			}
 		}
 	}
@@ -272,8 +332,10 @@ export function formatDetectionResults(result: DetectionResult): string {
 		lines.push('');
 		lines.push('# Metadata');
 		lines.push('');
-		lines.push(`Total Lines: ${result.metadata.totalLines}`);
-		lines.push(`Processed Lines: ${result.metadata.processedLines}`);
+		if (result.metadata.totalLines > 0) {
+			lines.push(`Total Lines: ${result.metadata.totalLines}`);
+			lines.push(`Processed Lines: ${result.metadata.processedLines}`);
+		}
 		lines.push(
 			`Processing Time: ${result.metadata.processingTimeMs.toFixed(2)}ms`,
 		);

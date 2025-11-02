@@ -3,19 +3,19 @@ import * as nls from 'vscode-nls';
 import { getConfiguration } from '../config/config';
 import {
 	deduplicateSecrets,
-	detectSecretsInContent,
 	formatDetectionResults,
 } from '../extraction/extract';
+import type { DetectedSecret, DetectionResult, ParseError } from '../types';
 import type { Telemetry } from '../telemetry/telemetry';
 import type { Notifier } from '../ui/notifier';
 import type { StatusBar } from '../ui/statusBar';
 import type { PerformanceMonitor } from '../utils/performance';
-import { handleSafetyChecks } from '../utils/safety';
+import { scanWorkspaceForSecrets } from '../utils/workspaceScanner';
 
 const localize = nls.config({ messageFormat: nls.MessageFormat.file })();
 
 /**
- * Register command to detect secrets in active document
+ * Register command to detect secrets in workspace
  */
 export function registerDetectCommand(
 	context: vscode.ExtensionContext,
@@ -31,70 +31,51 @@ export function registerDetectCommand(
 		async () => {
 			deps.telemetry.event('detect-command-invoked');
 
-			const editor = vscode.window.activeTextEditor;
-			if (!editor) {
+			// Check if workspace is open
+			if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
 				deps.notifier.showWarning(
 					localize(
-						'runtime.detect.no-editor',
-						'No active editor. Please open a file first.',
+						'runtime.detect.no-workspace',
+						'No workspace open. Please open a workspace folder first.',
 					),
 				);
 				return;
 			}
 
 			const config = getConfiguration();
-			const document = editor.document;
-
-			// Perform safety checks
-			const safetyResult = handleSafetyChecks(document, config);
-			if (!safetyResult.proceed) {
-				if (safetyResult.error) {
-					await deps.notifier.showEnhancedError(safetyResult.error);
-				} else {
-					deps.notifier.showError(safetyResult.message);
-				}
-				deps.telemetry.event('detect-blocked-by-safety', {
-					reason: safetyResult.message,
-				});
-				return;
-			}
-
-			// Show warnings if any
-			if (safetyResult.warnings.length > 0) {
-				for (const warning of safetyResult.warnings) {
-					deps.notifier.showWarning(warning);
-				}
-			}
 
 			// Process with progress indicator
 			try {
 				await deps.notifier.showProgress(
-					localize('runtime.detect.progress', 'Detecting secrets...'),
+					localize('runtime.detect.progress', 'Scanning workspace for secrets...'),
 					async (progress, token) => {
-						const content = document.getText();
 						const perfTracker = deps.performanceMonitor.startOperation(
 							'detect',
-							content.length,
+							0,
 						);
 
-						progress.report({ message: 'Scanning content...', increment: 20 });
+						progress.report({ message: 'Finding files...', increment: 10 });
 
 						// Check for cancellation
 						if (token.isCancellationRequested) {
 							throw new vscode.CancellationError();
 						}
 
-						// Detect secrets
-						const result = detectSecretsInContent(content, {
+						// Scan workspace for secrets
+						const scanResult = await scanWorkspaceForSecrets({
 							includeApiKeys: config.detectionIncludeApiKeys,
 							includePasswords: config.detectionIncludePasswords,
 							includeTokens: config.detectionIncludeTokens,
 							includePrivateKeys: config.detectionIncludePrivateKeys,
 							sensitivity: config.detectionSensitivity,
+							patterns: config.workspaceScanPatterns,
+							excludes: config.workspaceScanExcludes,
+							maxFiles: config.workspaceScanMaxFiles,
+							fileSizeLimit: config.safetyFileSizeWarnBytes,
 						});
 
 						progress.report({
-							message: 'Processing results...',
+							message: `Scanned ${scanResult.filesScanned} files...`,
 							increment: 40,
 						});
 
@@ -104,7 +85,7 @@ export function registerDetectCommand(
 						}
 
 						// Apply deduplication if enabled
-						let secrets = result.secrets;
+						let secrets = scanResult.secrets;
 						if (config.dedupeEnabled && secrets.length > 0) {
 							secrets = deduplicateSecrets(secrets);
 							progress.report({
@@ -118,11 +99,27 @@ export function registerDetectCommand(
 							throw new vscode.CancellationError();
 						}
 
-						// Format results
-						const formattedResult = formatDetectionResults({
-							...result,
-							secrets,
+						// Build detection result
+						const result: DetectionResult = Object.freeze({
+							success: true,
+							secrets: Object.freeze(secrets),
+							errors: scanResult.errors,
+							warnings: Object.freeze(
+								scanResult.filesSkipped > 0
+									? [
+											`Skipped ${scanResult.filesSkipped} file(s) (too large or binary)`,
+									  ]
+									: [],
+							),
+							metadata: Object.freeze({
+								totalLines: 0, // Not tracked for workspace scans
+								processedLines: 0,
+								processingTimeMs: scanResult.totalProcessingTimeMs,
+							}),
 						});
+
+						// Format results
+						const formattedResult = formatDetectionResults(result);
 
 						progress.report({ message: 'Preparing output...', increment: 20 });
 
@@ -173,34 +170,30 @@ export function registerDetectCommand(
 						deps.telemetry.event('detect-completed', {
 							secretCount: secrets.length,
 							duration: metrics.duration,
-							fileSize: content.length,
+							filesScanned: scanResult.filesScanned,
+							filesSkipped: scanResult.filesSkipped,
 							sensitivity: config.detectionSensitivity,
 						});
 
 						// Show completion message based on notification level
 						if (secrets.length > 0) {
+							const message = localize(
+								'runtime.detect.found',
+								'Found {0} potential secret(s) in {1} file(s)',
+								secrets.length,
+								scanResult.filesScanned,
+							);
 							if (config.notificationsLevel === 'all') {
-								deps.notifier.showWarning(
-									localize(
-										'runtime.detect.found',
-										'Found {0} potential secret(s)',
-										secrets.length,
-									),
-								);
+								deps.notifier.showWarning(message);
 							} else if (config.notificationsLevel === 'important') {
-								deps.notifier.showWarning(
-									localize(
-										'runtime.detect.found',
-										'Found {0} potential secret(s)',
-										secrets.length,
-									),
-								);
+								deps.notifier.showWarning(message);
 							}
 						} else if (config.notificationsLevel === 'all') {
 							deps.notifier.showInfo(
 								localize(
 									'runtime.detect.none',
-									'No secrets detected in this document',
+									'No secrets detected in workspace ({0} files scanned)',
+									scanResult.filesScanned,
 								),
 							);
 						}

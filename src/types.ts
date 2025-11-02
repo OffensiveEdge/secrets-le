@@ -30,6 +30,7 @@ export interface DetectedSecret {
 	readonly context?: string | undefined;
 	readonly key?: string | undefined;
 	readonly description?: string | undefined;
+	readonly filepath?: string | undefined;
 }
 
 export type SecretType =
@@ -117,6 +118,9 @@ export interface Configuration {
 	readonly performanceMaxDuration: number;
 	readonly performanceMaxMemoryUsage: number;
 	readonly performanceMaxCpuUsage: number;
+	readonly workspaceScanPatterns?: readonly string[];
+	readonly workspaceScanExcludes?: readonly string[];
+	readonly workspaceScanMaxFiles?: number;
 }
 
 export interface PerformanceMetrics {

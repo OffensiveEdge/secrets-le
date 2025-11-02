@@ -79,6 +79,28 @@ export function getConfiguration(): Configuration {
 			100000,
 			Number(config.get('performance.maxCpuUsage', 1000000)),
 		),
+		workspaceScanPatterns: Object.freeze(
+			(config.get('workspace.scanPatterns', ['**/*']) as string[]) || ['**/*'],
+		),
+		workspaceScanExcludes: Object.freeze(
+			(config.get('workspace.scanExcludes', [
+				'**/node_modules/**',
+				'**/.git/**',
+				'**/dist/**',
+				'**/build/**',
+				'**/.next/**',
+				'**/coverage/**',
+				'**/*.min.js',
+				'**/*.bundle.js',
+				'**/package-lock.json',
+				'**/yarn.lock',
+				'**/pnpm-lock.yaml',
+			]) as string[]) || [],
+		),
+		workspaceScanMaxFiles: Math.max(
+			100,
+			Number(config.get('workspace.scanMaxFiles', 10000)),
+		),
 	});
 }
 

@@ -214,7 +214,5 @@ If you encounter test failures:
 
 ## Related Documentation
 
-- [Performance Monitoring](PERFORMANCE.md) - Performance testing and benchmarks
-- [Architecture](../README.md#technical-implementation) - Code structure
-- [Contributing](../README.md#contributing) - Contribution guidelines
+- [Performance Monitoring](PERFORMANCE.md) - Performance monitoring and workspace scanning efficiency
 
