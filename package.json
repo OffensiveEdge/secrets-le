@@ -1,9 +1,9 @@
 {
 	"name": "secrets-le",
 	"publisher": "nolindnaidoo",
-	"displayName": "Secrets-LE",
-	"description": "Zero-Hassle Secrets Detection & Sanitization - Detect and sanitize credentials, tokens, and API keys locally — before you commit. GitGuardian-level security without ever sending data off your machine.",
-	"version": "1.7.0",
+	"displayName": "%manifest.ext.name%",
+	"description": "%manifest.ext.description%",
+	"version": "1.7.1",
 	"license": "MIT",
 	"author": {
 		"name": "OffensiveEdge",
@@ -282,16 +282,50 @@
 					"minimum": 1048576,
 					"description": "%manifest.settings.performance.max-memory.desc%"
 				},
-				"secrets-le.performance.maxCpuUsage": {
-					"type": "number",
-					"default": 1000000,
-					"minimum": 100000,
-					"description": "%manifest.settings.performance.max-cpu.desc%"
-				}
+			"secrets-le.performance.maxCpuUsage": {
+				"type": "number",
+				"default": 1000000,
+				"minimum": 100000,
+				"description": "%manifest.settings.performance.max-cpu.desc%"
+			},
+			"secrets-le.workspace.scanPatterns": {
+				"type": "array",
+				"items": {
+					"type": "string"
+				},
+				"default": ["**/*"],
+				"description": "%manifest.settings.workspace.scan-patterns.desc%"
+			},
+			"secrets-le.workspace.scanExcludes": {
+				"type": "array",
+				"items": {
+					"type": "string"
+				},
+				"default": [
+					"**/node_modules/**",
+					"**/.git/**",
+					"**/dist/**",
+					"**/build/**",
+					"**/.next/**",
+					"**/coverage/**",
+					"**/*.min.js",
+					"**/*.bundle.js",
+					"**/package-lock.json",
+					"**/yarn.lock",
+					"**/pnpm-lock.yaml"
+				],
+				"description": "%manifest.settings.workspace.scan-excludes.desc%"
+			},
+			"secrets-le.workspace.scanMaxFiles": {
+				"type": "number",
+				"default": 10000,
+				"minimum": 100,
+				"description": "%manifest.settings.workspace.scan-max-files.desc%"
 			}
 		}
-	},
-	"scripts": {
+	}
+},
+"scripts": {
 		"build": "tsc -p ./",
 		"clean": "rm -rf dist coverage",
 		"clean:i18n": "node -e \"const fs=require('fs');fs.readdirSync('.').filter(f=>f.startsWith('package.nls.')&&f.endsWith('.json')&&f!=='package.nls.json').forEach(f=>fs.unlinkSync(f));try{fs.rmSync('vsix',{recursive:true})}catch(e){}\"",

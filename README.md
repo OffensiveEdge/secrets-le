@@ -20,13 +20,14 @@
   <img src="https://img.shields.io/open-vsx/dt/OffensiveEdge/secrets-le?label=downloads&color=green" alt="Downloads" />
   <img src="https://img.shields.io/open-vsx/rating/OffensiveEdge/secrets-le?label=rating&color=yellow" alt="Rating" />
   <img src="https://img.shields.io/badge/Open%20Source-100%25-purple" alt="100% Open Source" />
-  <img src="https://github.com/OffensiveEdge/secrets-le/actions/workflows/ci.yml/badge.svg" alt="Build Status" />
   <img src="https://img.shields.io/badge/Vulnerabilities-0%20Critical-brightgreen" alt="Zero Critical Vulnerabilities" />
 </p>
 
 ---
 
-<!-- Preview images will go here -->
+<p align="center">
+  <img src="src/assets/images/demo.gif" alt="Secret Detection Demo" style="max-width: 100%; height: auto;" />
+</p>
 
 ---
 
@@ -105,12 +106,14 @@ If Secrets-LE saves you time, a quick rating helps other developers discover it:
 
 ## 🚀 More from the LE Family
 
-- **[Paths-LE](https://open-vsx.org/extension/OffensiveEdge/paths-le)** - Extract file paths from code and configs • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.paths-le)
-- **[Regex-LE](https://open-vsx.org/extension/OffensiveEdge/regex-le)** - Test and validate regex patterns • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.regex-le)
-- **[String-LE](https://open-vsx.org/extension/OffensiveEdge/string-le)** - Extract user-visible strings for i18n • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.string-le)
-- **[Numbers-LE](https://open-vsx.org/extension/OffensiveEdge/numbers-le)** - Extract and analyze numeric data • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.numbers-le)
-- **[URLs-LE](https://open-vsx.org/extension/OffensiveEdge/urls-le)** - Audit API endpoints and external resources • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.urls-le)
+- **[String-LE](https://open-vsx.org/extension/OffensiveEdge/string-le)** - Extract user-visible strings for i18n and validation • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.string-le)
+- **[Numbers-LE](https://open-vsx.org/extension/OffensiveEdge/numbers-le)** - Extract and analyze numeric data with statistics • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.numbers-le)
+- **[EnvSync-LE](https://open-vsx.org/extension/OffensiveEdge/envsync-le)** - Keep .env files in sync with visual diffs • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.envsync-le)
+- **[Paths-LE](https://open-vsx.org/extension/OffensiveEdge/paths-le)** - Extract file paths from imports and dependencies • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.paths-le)
+- **[Regex-LE](https://open-vsx.org/extension/OffensiveEdge/regex-le)** - Test and validate regex patterns with live feedback • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.regex-le)
+- **[Scrape-LE](https://open-vsx.org/extension/OffensiveEdge/scrape-le)** - Validate scraper targets before debugging • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.scrape-le)
 - **[Colors-LE](https://open-vsx.org/extension/OffensiveEdge/colors-le)** - Extract and analyze colors from stylesheets • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.colors-le)
+- **[URLs-LE](https://open-vsx.org/extension/OffensiveEdge/urls-le)** - Extract URLs from any codebase with precision • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.urls-le)
 - **[Dates-LE](https://open-vsx.org/extension/OffensiveEdge/dates-le)** - Extract temporal data from logs and APIs • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.dates-le)
 
 ## 💡 Use Cases
@@ -278,7 +281,7 @@ You can customize scan patterns and exclusions in settings.
 
 ## 🌍 Language Support
 
-**4 languages**: English (base), German, Spanish, French
+**13 languages**: English, German, Spanish, French, Indonesian, Italian, Japanese, Korean, Portuguese (Brazil), Russian, Ukrainian, Vietnamese, Chinese (Simplified)
 
 ## 🧩 System Requirements
 
@@ -337,7 +340,7 @@ Yes! By default it scans all files in your workspace, excluding common directori
 
 ## 📊 Testing
 
-**17 unit tests across 1 test file** • Powered by Vitest • Run with `bun run test:coverage`
+**17 unit tests** • Powered by Vitest • Run with `bun run test:coverage`
 
 ### Core Principle
 
