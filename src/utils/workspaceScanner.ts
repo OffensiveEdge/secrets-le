@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import type { DetectedSecret, DetectionResult, ParseError } from '../types';
 import { detectSecretsInContent } from '../extraction/extract';
+import type { DetectedSecret, ParseError } from '../types';
 
 export interface WorkspaceScanOptions {
 	readonly includeApiKeys?: boolean;
@@ -97,7 +97,7 @@ export async function scanWorkspaceForSecrets(
 		for (const fileUri of allFilesList) {
 			try {
 				const stat = await vscode.workspace.fs.stat(fileUri);
-				
+
 				// Skip if too large
 				if (stat.size > fileSizeLimit) {
 					filesSkipped++;
@@ -107,20 +107,34 @@ export async function scanWorkspaceForSecrets(
 				// Read and process file
 				const document = await vscode.workspace.openTextDocument(fileUri);
 				const filepath = vscode.workspace.asRelativePath(fileUri, false);
-				
+
 				// Skip binary files
-				if (document.languageId === 'plaintext' && stat.size > 0 && document.getText().includes('\x00')) {
+				if (
+					document.languageId === 'plaintext' &&
+					stat.size > 0 &&
+					document.getText().includes('\x00')
+				) {
 					filesSkipped++;
 					continue;
 				}
 
 				const content = document.getText();
 				const result = detectSecretsInContent(content, {
-					includeApiKeys: options.includeApiKeys,
-					includePasswords: options.includePasswords,
-					includeTokens: options.includeTokens,
-					includePrivateKeys: options.includePrivateKeys,
-					sensitivity: options.sensitivity,
+					...(options.includeApiKeys !== undefined && {
+						includeApiKeys: options.includeApiKeys,
+					}),
+					...(options.includePasswords !== undefined && {
+						includePasswords: options.includePasswords,
+					}),
+					...(options.includeTokens !== undefined && {
+						includeTokens: options.includeTokens,
+					}),
+					...(options.includePrivateKeys !== undefined && {
+						includePrivateKeys: options.includePrivateKeys,
+					}),
+					...(options.sensitivity !== undefined && {
+						sensitivity: options.sensitivity,
+					}),
 				});
 
 				// Add filepath to each secret
@@ -132,10 +146,12 @@ export async function scanWorkspaceForSecrets(
 				);
 
 				secrets.push(...secretsWithPath);
-				errors.push(...result.errors.map((err) => ({
-					...err,
-					filepath,
-				})));
+				errors.push(
+					...result.errors.map((err) => ({
+						...err,
+						filepath,
+					})),
+				);
 
 				filesScanned++;
 			} catch (error) {
@@ -168,4 +184,3 @@ export async function scanWorkspaceForSecrets(
 		totalProcessingTimeMs,
 	});
 }
-

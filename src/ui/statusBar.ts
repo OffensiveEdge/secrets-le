@@ -15,9 +15,9 @@ export function createStatusBar(_context: vscode.ExtensionContext): StatusBar {
 		100,
 	);
 
-	statusBarItem.text = '$(symbol-misc) {{DisplayName}}-LE';
-	statusBarItem.tooltip = 'Click to extract from active editor';
-	statusBarItem.command = '{{namespace}}-le.extract';
+	statusBarItem.text = '$(symbol-misc) Secrets-LE';
+	statusBarItem.tooltip = 'Click to detect secrets';
+	statusBarItem.command = 'secrets-le.detect';
 
 	if (config.statusBarEnabled) {
 		statusBarItem.show();

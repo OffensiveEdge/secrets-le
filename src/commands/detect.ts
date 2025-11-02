@@ -5,8 +5,8 @@ import {
 	deduplicateSecrets,
 	formatDetectionResults,
 } from '../extraction/extract';
-import type { DetectedSecret, DetectionResult, ParseError } from '../types';
 import type { Telemetry } from '../telemetry/telemetry';
+import type { DetectionResult } from '../types';
 import type { Notifier } from '../ui/notifier';
 import type { StatusBar } from '../ui/statusBar';
 import type { PerformanceMonitor } from '../utils/performance';
@@ -32,7 +32,10 @@ export function registerDetectCommand(
 			deps.telemetry.event('detect-command-invoked');
 
 			// Check if workspace is open
-			if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+			if (
+				!vscode.workspace.workspaceFolders ||
+				vscode.workspace.workspaceFolders.length === 0
+			) {
 				deps.notifier.showWarning(
 					localize(
 						'runtime.detect.no-workspace',
@@ -47,7 +50,10 @@ export function registerDetectCommand(
 			// Process with progress indicator
 			try {
 				await deps.notifier.showProgress(
-					localize('runtime.detect.progress', 'Scanning workspace for secrets...'),
+					localize(
+						'runtime.detect.progress',
+						'Scanning workspace for secrets...',
+					),
 					async (progress, token) => {
 						const perfTracker = deps.performanceMonitor.startOperation(
 							'detect',
@@ -68,9 +74,15 @@ export function registerDetectCommand(
 							includeTokens: config.detectionIncludeTokens,
 							includePrivateKeys: config.detectionIncludePrivateKeys,
 							sensitivity: config.detectionSensitivity,
-							patterns: config.workspaceScanPatterns,
-							excludes: config.workspaceScanExcludes,
-							maxFiles: config.workspaceScanMaxFiles,
+							...(config.workspaceScanPatterns !== undefined && {
+								patterns: config.workspaceScanPatterns,
+							}),
+							...(config.workspaceScanExcludes !== undefined && {
+								excludes: config.workspaceScanExcludes,
+							}),
+							...(config.workspaceScanMaxFiles !== undefined && {
+								maxFiles: config.workspaceScanMaxFiles,
+							}),
 							fileSizeLimit: config.safetyFileSizeWarnBytes,
 						});
 
@@ -108,7 +120,7 @@ export function registerDetectCommand(
 								scanResult.filesSkipped > 0
 									? [
 											`Skipped ${scanResult.filesSkipped} file(s) (too large or binary)`,
-									  ]
+										]
 									: [],
 							),
 							metadata: Object.freeze({

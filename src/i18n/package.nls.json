@@ -36,6 +36,9 @@
 	"manifest.settings.performance.max-duration.desc": "Maximum allowed operation duration in milliseconds",
 	"manifest.settings.performance.max-memory.desc": "Maximum allowed memory usage in bytes",
 	"manifest.settings.performance.max-cpu.desc": "Maximum allowed CPU usage in microseconds",
+	"manifest.settings.workspace.scan-patterns.desc": "Glob patterns for files to scan in workspace (e.g., '**/*' for all files)",
+	"manifest.settings.workspace.scan-excludes.desc": "Glob patterns for files to exclude from workspace scans",
+	"manifest.settings.workspace.scan-max-files.desc": "Maximum number of files to scan in workspace operations",
 	"manifest.capability.untrusted-workspaces.desc": "Limited functionality in untrusted workspaces",
 
 	"runtime.help.title": "Secrets-LE Help",
@@ -46,12 +49,13 @@
 	"runtime.help.support": "GitHub Issues: https://github.com/OffensiveEdge/secrets-le/issues",
 
 	"runtime.detect.no-editor": "No active editor. Please open a file first.",
+	"runtime.detect.no-workspace": "No workspace open. Please open a workspace folder first.",
 	"runtime.detect.progress": "Detecting secrets...",
 	"runtime.detect.copied": "Results copied to clipboard",
 	"runtime.detect.complete": "Detected {0} secrets in {1}ms",
 	"runtime.detect.error": "Detection failed: {0}",
-	"runtime.detect.found": "Found {0} potential secret(s)",
-	"runtime.detect.none": "No secrets detected in this document",
+	"runtime.detect.found": "Found {0} potential secret(s) in {1} file(s)",
+	"runtime.detect.none": "No secrets detected in workspace ({0} files scanned)",
 
 	"runtime.sanitize.no-editor": "No active editor. Please open a file first.",
 	"runtime.sanitize.progress": "Sanitizing content...",

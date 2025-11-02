@@ -201,7 +201,7 @@ export function formatDetectionResults(result: DetectionResult): string {
 
 		// Group by filepath (if workspace scan) or by type (if single file)
 		const hasFilePaths = result.secrets.some((s) => s.filepath);
-		
+
 		if (hasFilePaths) {
 			// Group by filepath first, then by type
 			const byFile = new Map<string, DetectedSecret[]>();

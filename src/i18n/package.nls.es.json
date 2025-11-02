@@ -1,9 +1,0 @@
-{
-	"manifest.ext.name": "{{DisplayName}}-LE",
-	"manifest.ext.description": "{{description}}",
-	"manifest.command.category": "{{DisplayName}}-LE",
-	"manifest.command.extract.title": "Extraer elementos",
-	"manifest.command.settings.title": "Abrir configuración",
-	"manifest.command.help.title": "Ayuda y solución de problemas"
-}
-

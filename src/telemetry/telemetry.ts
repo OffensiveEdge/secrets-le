@@ -15,9 +15,7 @@ export function createTelemetry(): Telemetry {
 	let outputChannel: vscode.OutputChannel | undefined;
 
 	if (config.telemetryEnabled) {
-		outputChannel = vscode.window.createOutputChannel(
-			'{{DisplayName}}-LE Telemetry',
-		);
+		outputChannel = vscode.window.createOutputChannel('Secrets-LE Telemetry');
 	}
 
 	return Object.freeze({
