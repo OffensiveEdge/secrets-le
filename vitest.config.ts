@@ -11,7 +11,7 @@ export default defineConfig({
     environment: 'node',
     pool: 'threads',
     setupFiles: [],
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'src/**/*.spec.ts'],
     exclude: ['node_modules/**', 'dist/**'],
     coverage: {
       provider: 'v8',

@@ -6,6 +6,6 @@
  */
 
 export function extractFromSampleFormat(_content: string): readonly string[] {
-  // Implement format-specific extraction logic
-  return Object.freeze([])
+	// Implement format-specific extraction logic
+	return Object.freeze([]);
 }

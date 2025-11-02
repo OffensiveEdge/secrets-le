@@ -84,7 +84,6 @@ export function registerSanitizeCommand(
 			}
 
 			// Process with progress indicator
-			deps.statusBar.showProgress('Sanitizing secrets...');
 			try {
 				await deps.notifier.showProgress(
 					localize('runtime.sanitize.progress', 'Sanitizing content...'),
@@ -173,7 +172,9 @@ export function registerSanitizeCommand(
 							!activeEditor ||
 							activeEditor.document.uri.toString() !== document.uri.toString()
 						) {
-							throw new Error('Document was closed or changed during sanitization');
+							throw new Error(
+								'Document was closed or changed during sanitization',
+							);
 						}
 
 						// Check for cancellation before applying edit
@@ -221,9 +222,7 @@ export function registerSanitizeCommand(
 						);
 					},
 				);
-				deps.statusBar.hideProgress();
 			} catch (error) {
-				deps.statusBar.hideProgress();
 				// Don't show error for user cancellation
 				if (error instanceof vscode.CancellationError) {
 					return;

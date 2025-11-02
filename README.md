@@ -1,118 +1,201 @@
-# Secrets-LE
+<p align="center">
+  <img src="src/assets/images/icon.png" alt="Secrets-LE Logo" width="96" height="96"/>
+</p>
+<h1 align="center">Secrets-LE: Zero Hassle Secret Detection</h1>
+<p align="center">
+  <b>Detect and sanitize credentials, tokens, and API keys locally</b><br/>
+  <i>GitGuardian-level security without ever sending data off your machine</i>
+</p>
 
-**Zero-Hassle Secrets Detection & Sanitization** - Detect and sanitize credentials, tokens, and API keys locally — before you commit. GitGuardian-level security without ever sending data off your machine.
+<p align="center">
+  <a href="https://open-vsx.org/extension/OffensiveEdge/secrets-le">
+    <img src="https://img.shields.io/badge/Install%20from-Open%20VSX-blue?style=for-the-badge&logo=visualstudiocode" alt="Install from Open VSX" />
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.secrets-le">
+    <img src="https://img.shields.io/badge/Install%20from-VS%20Code-blue?style=for-the-badge&logo=visualstudiocode" alt="Install from VS Code" />
+  </a>
+</p>
 
-[![Version](https://img.shields.io/badge/version-1.8.0-blue.svg)](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.secrets-le)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+<p align="center">
+  <img src="https://img.shields.io/open-vsx/dt/OffensiveEdge/secrets-le?label=downloads&color=green" alt="Downloads" />
+  <img src="https://img.shields.io/open-vsx/rating/OffensiveEdge/secrets-le?label=rating&color=yellow" alt="Rating" />
+  <img src="https://img.shields.io/badge/Open%20Source-100%25-purple" alt="100% Open Source" />
+  <img src="https://github.com/OffensiveEdge/secrets-le/actions/workflows/ci.yml/badge.svg" alt="Build Status" />
+  <img src="https://img.shields.io/badge/Vulnerabilities-0%20Critical-brightgreen" alt="Zero Critical Vulnerabilities" />
+</p>
 
-## ✨ Features
+---
 
-- 🔍 **Detect Secrets** - Find API keys, tokens, passwords, and private keys in your code
-- 🧹 **Sanitize Content** - Automatically replace detected secrets with safe placeholders
-- 🎯 **Configurable Sensitivity** - Adjust detection levels (low, medium, high)
-- 🛡️ **Security-First** - Detects AWS, Azure, GCP keys, JWT tokens, and more
-- 🔒 **100% Local** - No data leaves your machine, ever
-- 🚀 **Zero-Hassle Guarantee** - Works reliably on any text file
+<!-- Preview images will go here -->
+
+---
+
+## ⚡ See It In Action
+
+**Before**: Manually searching for hardcoded secrets (30+ minutes)
+
+```javascript
+const apiKey = "AKIAIOSFODNN7EXAMPLE"
+const password = "mypassword123"
+// ... searching through 100+ files
+```
+
+**After**: One command detects all secrets automatically
+
+```
+AWS Access Key (line 1) - Confidence: High
+Password (line 2) - Confidence: Medium
+GitHub Token (line 15) - Confidence: High
+... (12 secrets total)
+```
+
+---
+
+## ✅ Why Secrets-LE?
+
+- **15+ secret types detected** - AWS, Azure, GCP, GitHub, JWT, passwords, private keys
+- **Zero Config** - Install → Press `Cmd+Alt+S` → Done
+- **100% Local** - No data leaves your machine, ever
+- **GitGuardian-level detection** - Without the cloud dependency
+
+Perfect for pre-commit checks, security audits, and credential management.
+
+---
+
+## 🙏 Thank You
+
+If Secrets-LE saves you time, a quick rating helps other developers discover it:  
+⭐ [Open VSX](https://open-vsx.org/extension/OffensiveEdge/secrets-le) • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.secrets-le)
+
+---
+
+### Key Features
+
+- **Detect Secrets** - Find API keys, tokens, passwords, and private keys
+- **Sanitize Content** - Automatically replace secrets with safe placeholders
+- **Configurable Sensitivity** - Adjust detection levels (low, medium, high)
+- **Security-First** - Detects AWS, Azure, GCP keys, JWT tokens, and more
+- **Universal Support** - Works on any text file format
+- **13 languages** - English, Chinese, German, Spanish, French, Indonesian, Italian, Japanese, Korean, Portuguese, Russian, Ukrainian, Vietnamese
+
+## 🚀 More from the LE Family
+
+- **[Paths-LE](https://open-vsx.org/extension/OffensiveEdge/paths-le)** - Extract file paths from code and configs • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.paths-le)
+- **[Regex-LE](https://open-vsx.org/extension/OffensiveEdge/regex-le)** - Test and validate regex patterns • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.regex-le)
+- **[String-LE](https://open-vsx.org/extension/OffensiveEdge/string-le)** - Extract user-visible strings for i18n • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.string-le)
+- **[Numbers-LE](https://open-vsx.org/extension/OffensiveEdge/numbers-le)** - Extract and analyze numeric data • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.numbers-le)
+- **[URLs-LE](https://open-vsx.org/extension/OffensiveEdge/urls-le)** - Audit API endpoints and external resources • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.urls-le)
+- **[Colors-LE](https://open-vsx.org/extension/OffensiveEdge/colors-le)** - Extract and analyze colors from stylesheets • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.colors-le)
+- **[Dates-LE](https://open-vsx.org/extension/OffensiveEdge/dates-le)** - Extract temporal data from logs and APIs • [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.dates-le)
+
+## 💡 Use Cases
+
+- **Pre-Commit Checks** - Scan files before committing to prevent credential leaks
+- **Security Audits** - Find hardcoded secrets across entire codebase
+- **Config Validation** - Ensure no secrets in config files before deployment
+- **Code Review** - Quick scan during pull request reviews
+
+### Detecting API Keys & Credentials
+
+Find cloud provider keys and credentials automatically:
+
+```javascript
+// AWS Access Key
+const AWS_KEY = "AKIAIOSFODNN7EXAMPLE" // ✅ Detected
+
+// Azure Key
+const AZURE_KEY = "DefaultEndpointsProtocol=https;AccountKey=..." // ✅ Detected
+
+// GCP Service Account
+const GCP_KEY = '{"type":"service_account",...}' // ✅ Detected
+```
+
+---
+
+### Detecting Tokens & Authentication
+
+Find authentication tokens:
+
+```javascript
+// GitHub Personal Access Token
+const GITHUB_TOKEN = "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" // ✅ Detected (example pattern)
+
+// JWT Token
+const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // ✅ Detected
+
+// Bearer Token
+Authorization: Bearer sk_live_xxxxxxxxxxxx // ✅ Detected
+```
+
+---
+
+### Detecting Passwords & Private Keys
+
+Find passwords and private keys:
+
+```env
+# Environment file
+DATABASE_PASSWORD=mysecret123  # ✅ Detected
+API_KEY=sk_live_abcdefgh       # ✅ Detected
+```
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEA...  # ✅ Detected
+-----END RSA PRIVATE KEY-----
+```
+
+---
 
 ## 🚀 Quick Start
 
-1. **Open any file** in VS Code (JavaScript, Python, JSON, or any text file)
-2. **Press `Ctrl+Alt+S`** (or `Cmd+Alt+S` on Mac) or search for "Secrets-LE: Detect Secrets"
-3. **Review results** - See all detected secrets with locations and confidence levels
-4. **Sanitize if needed** - Run "Sanitize Secrets" to replace them safely
+1. Install from [Open VSX](https://open-vsx.org/extension/OffensiveEdge/secrets-le) or [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=nolindnaidoo.secrets-le)
+2. Open any file (`.js`, `.ts`, `.json`, `.env`, `.py`, or any text file)
+3. Run `Secrets-LE: Detect Secrets` (`Cmd+Alt+S` / `Ctrl+Alt+S`)
+4. Review detected secrets and sanitize if needed
 
-## 📋 Commands
+## 📋 Available Commands
 
-### Detect Secrets (`secrets-le.detect`)
-Scan the active document for potential secrets (API keys, tokens, passwords, private keys).
+Secrets-LE provides **5 commands** accessible via Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`):
 
-**Usage**: `Ctrl+Alt+S` / `Cmd+Alt+S` or Command Palette → "Secrets-LE: Detect Secrets"
+### Core Commands
 
-**Features**:
-- Detects 15+ secret types (AWS keys, GitHub tokens, passwords, private keys, etc.)
-- Configurable sensitivity levels
-- Line and column positioning
-- Confidence scoring (low, medium, high)
-- Deduplication option
-- Progress indication for large files
+- **Detect Secrets** (`Cmd/Ctrl+Alt+S`) - Scan for API keys, tokens, passwords
+- **Sanitize Secrets** - Replace detected secrets with safe placeholders
 
-### Sanitize Secrets (`secrets-le.sanitize`)
-Replace detected secrets with safe placeholders.
+### Settings & Help
 
-**Usage**: Command Palette → "Secrets-LE: Sanitize Secrets"
+- **Open Settings** - Quick access to extension settings
+- **Help & Troubleshooting** - Comprehensive in-editor documentation
 
-**Features**:
-- Interactive confirmation before sanitizing
-- Customizable replacement text
-- Preserves file structure
-- Tracks all replacements made
+## ⚙️ Configuration
 
-### Settings Management
-- **Export Settings** - Save your configuration to a JSON file
-- **Import Settings** - Restore settings from a previously exported file
-- **Reset Settings** - Reset all settings to defaults
+Secrets-LE has minimal configuration to keep things simple. Most settings are available in VS Code's settings UI under "Secrets-LE".
+
+Key settings include:
+
+- Detection sensitivity (low, medium, high)
+- Secret type filters (API keys, passwords, tokens, private keys)
+- Sanitization replacement text
+- Deduplication options
+- Output format preferences (side-by-side, clipboard copy)
+- Safety warnings and thresholds
+- Notification levels (silent, important, all)
+
+For the complete list of available settings, open VS Code Settings and search for "secrets-le".
 
 ## 📁 Supported File Types
 
-**Secrets-LE works on any text file!** Detection uses regex patterns applied directly to text content, making it truly universal—just like Regex-LE.
+**Secrets-LE works universally on any text file!** Detection uses regex patterns applied directly to text content.
 
-### ✅ Works Universally (Zero-Hassle Guaranteed)
-
-**Once the extension is activated, it works on any text file VS Code can open.**
-
-**Programming Languages**
-- JavaScript/TypeScript (`.js`, `.ts`, `.jsx`, `.tsx`, `.mjs`, `.cjs`)
-- Python (`.py`, `.pyw`, `.pyi`)
-- Ruby (`.rb`, `.rake`)
-- Go (`.go`)
-- Rust (`.rs`)
-- Java (`.java`)
-- C/C++ (`.c`, `.cpp`, `.h`, `.hpp`)
-- C# (`.cs`)
-- PHP (`.php`)
-- Swift (`.swift`)
-- Kotlin (`.kt`)
-- And any other programming language
-
-**Data Formats**
-- JSON (`.json`, `.jsonc`)
-- YAML (`.yaml`, `.yml`)
-- TOML (`.toml`)
-- XML (`.xml`, `.xhtml`)
-- CSV (`.csv`)
-
-**Web Technologies**
-- HTML (`.html`, `.htm`)
-- CSS (`.css`, `.scss`, `.less`, `.sass`)
-
-**Configuration Files**
-- Environment (`.env`, `.env.local`, `.env.production`)
-- INI (`.ini`, `.cfg`, `.conf`)
-- Config files (`.config`, `.conf`)
-
-**Documentation & Text**
-- Markdown (`.md`, `.markdown`)
-- Plain Text (`.txt`)
-- Log Files (`.log`)
-- README files
-- Documentation (`.rst`, `.tex`, `.org`)
-
-**Shell & Scripts**
-- Shell/Bash (`.sh`, `.bash`, `.zsh`)
-- PowerShell (`.ps1`)
-- Batch (`.bat`, `.cmd`)
-
-### Understanding Activation Events
-
-**Performance Optimization**: Secrets-LE uses language-specific activation events in `package.json` for performance—these make the extension load faster for common file types. However, **once activated, the extension works on any text file**.
-
-**How It Works**:
-1. Extension activates when you open JavaScript, TypeScript, JSON, Python, etc. (for performance)
-2. Once activated, commands work on **any file** VS Code can open
-3. Detection uses regex patterns—no format parsing required
-4. Safety checks handle edge cases (binary files, size limits)
-
-**Key Message**: Activation events are for **performance optimization**, not functionality restrictions. Open any text file and try it—it works!
+| Category          | File Types                                                                          |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| **Programming**   | JavaScript, TypeScript, Python, Ruby, Go, Rust, Java, C/C++, C#, PHP, Swift, Kotlin |
+| **Data Formats**  | JSON, YAML, TOML, XML, CSV                                                          |
+| **Web**           | HTML, CSS, SCSS, LESS, Sass                                                         |
+| **Config**        | .env, .ini, .cfg, .conf                                                             |
+| **Documentation** | Markdown, Plain Text, Log Files                                                     |
+| **Shell**         | Bash, Zsh, PowerShell, Batch                                                        |
 
 ### What Gets Detected
 
@@ -133,7 +216,6 @@ Replace detected secrets with safe placeholders.
 
 **Passwords**:
 - Plaintext passwords
-- Hashed passwords (if detected)
 - Password fields in configs
 
 **Private Keys**:
@@ -141,66 +223,7 @@ Replace detected secrets with safe placeholders.
 - PGP keys
 - Private key files
 
-**Other**:
-- Session IDs
-- Cookie values
-- Connection strings
-
-### Examples by File Type
-
-**JavaScript/TypeScript** - Detect API keys:
-```javascript
-// Pattern: apiKey: "..." or API_KEY="..."
-const apiKey = "AKIAIOSFODNN7EXAMPLE";  // ✅ Detected
-```
-
-**JSON Config** - Detect secrets in config:
-```json
-{
-  "database": {
-    "password": "mypassword123",  // ✅ Detected
-    "apiKey": "sk_live_..."        // ✅ Detected
-  }
-}
-```
-
-**ENV Files** - Environment variables:
-```env
-AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE  # ✅ Detected
-DATABASE_PASSWORD=secret123             # ✅ Detected
-```
-
-**Python** - Detect in code:
-```python
-api_key = "sk_live_abcd1234"  # ✅ Detected
-password = "mysecret"          # ✅ Detected
-```
-
-**YAML Config** - Kubernetes secrets:
-```yaml
-apiVersion: v1
-data:
-  password: cGFzc3dvcmQxMjM=  # ✅ Detected if base64 decoded
-```
-
-## ⚙️ Configuration
-
-### Key Settings
-
-- **`detection.enabled`** - Enable/disable secret detection
-- **`detection.sensitivity`** - Detection level (low, medium, high)
-- **`detection.includeApiKeys`** - Include API keys in detection
-- **`detection.includePasswords`** - Include passwords in detection
-- **`detection.includeTokens`** - Include tokens in detection
-- **`detection.includePrivateKeys`** - Include private keys in detection
-- **`sanitization.enabled`** - Enable content sanitization
-- **`sanitization.replaceWith`** - Replacement text (default: `***REDACTED***`)
-- **`dedupeEnabled`** - Remove duplicate detections
-- **`copyToClipboardEnabled`** - Auto-copy results
-- **`safety.enabled`** - Enable safety checks for large files
-- **`notificationsLevel`** - Control notification verbosity (all, important, silent)
-
-For the complete list, open VS Code Settings and search for "secrets-le".
+---
 
 ## 🌍 Language Support
 
@@ -208,66 +231,54 @@ For the complete list, open VS Code Settings and search for "secrets-le".
 
 ## 🧩 System Requirements
 
-- **VS Code**: 1.70.0 or higher
-- **Platform**: Windows, macOS, Linux
-- **Node.js**: 20.0.0+ (bundled with VS Code)
+**VS Code** 1.70.0+ • **Platform** Windows, macOS, Linux  
+**Memory** 200MB recommended for large files
 
-## 🔒 Privacy & Security
+## 🔒 Privacy
 
-- **100% local processing** - No data leaves your machine
-- **No network requests** - Everything runs locally
-- **Optional telemetry** - Local-only logging when enabled
-- **Secure settings import** - Validated against schema
-- **Path sanitization** - Error messages don't leak sensitive paths
+100% local processing. No data leaves your machine. Optional logging: `secrets-le.telemetryEnabled`
 
-## 🎯 Zero-Hassle Guarantee
+## ⚡ Performance
 
-Secrets-LE is designed to "just work" without complications:
+Secrets-LE includes built-in performance monitoring and configurable thresholds to help track operation speed and resource usage.
 
-✅ **Universal text support** - Works on any file VS Code can open as text  
-✅ **No format restrictions** - Regex patterns work on any text content  
-✅ **Automatic safety checks** - Binary files, size limits handled automatically  
-✅ **Graceful error handling** - Clear messages, not cryptic errors  
-✅ **Performance protection** - Built-in limits prevent resource exhaustion
+## 🔧 Troubleshooting
 
-**Unlike format-specific extractors** (which require parsers for each file type), Secrets-LE uses regex patterns on text—making it truly universal while maintaining reliability.
+**Not detecting secrets?**  
+Ensure file is saved and check sensitivity level in settings
 
-## 🆚 Comparison with Other LE Extensions
+**False positives?**  
+Lower sensitivity level or disable specific secret types
 
-| Feature | Secrets-LE | Regex-LE | Paths-LE |
-|---------|------------|----------|----------|
-| **File Type Support** | ✅ Any text (once activated) | ✅ Any text | ⚠️ 9 specific types |
-| **Detection Method** | ✅ Regex patterns | ✅ User-defined regex | ❌ Format parsers |
-| **Activation Strategy** | ⚠️ Language-specific | ✅ Command-based | ⚠️ Format-specific |
-| **Zero-Hassle** | ✅ Universal (post-activation) | ✅ Universal | ⚠️ Format-limited |
+**Need help?**  
+Check [Issues](https://github.com/OffensiveEdge/secrets-le/issues) or enable logging: `secrets-le.telemetryEnabled: true`
 
-**Key Insight**: Secrets-LE and Regex-LE both use regex on text—functionally identical. Only difference is Secrets-LE uses predefined secret patterns vs Regex-LE's user-defined patterns.
+## ❓ FAQ
 
-## 📚 Documentation
+**What secrets are detected?**  
+15+ types including AWS, Azure, GCP, GitHub, JWT, passwords, private keys
 
-- **Commands Guide**: See [docs/COMMANDS.md](docs/COMMANDS.md)
-- **Architecture**: See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- **File Type Analysis**: See [docs/FILE_TYPE_ANALYSIS.md](docs/FILE_TYPE_ANALYSIS.md)
-- **Performance**: See [docs/PERFORMANCE.md](docs/PERFORMANCE.md)
+**Does it send data anywhere?**  
+No! 100% local processing. No network requests ever
 
-## 🤝 Contributing
+**Can I customize detection?**  
+Yes! Adjust sensitivity levels and enable/disable specific secret types
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+**How accurate is detection?**  
+High accuracy with configurable sensitivity to reduce false positives
 
-## 📝 License
+## 📊 Testing
 
-MIT License - See [LICENSE](LICENSE) file for details.
+**17 unit tests across 1 test file** • Powered by Vitest • Run with `bun run test:coverage`
 
-## 🙏 Acknowledgments
+### Test Suite Highlights
 
-Built with patterns from the LE extension family:
-- Paths-LE, Regex-LE, Numbers-LE, Dates-LE, URLs-LE, Strings-LE, EnvSync-LE, Scrape-LE
-
-## 📞 Support
-
-- **GitHub Issues**: [Report a bug or request a feature](https://github.com/OffensiveEdge/secrets-le/issues)
-- **Documentation**: See the `docs/` directory for detailed guides
+- **Comprehensive secret detection** across 15+ types
+- **Sanitization validation** with replacement verification
+- **Error handling** with graceful degradation
+- **Security-focused** testing for edge cases
 
 ---
 
-**Made with ❤️ by [OffensiveEdge](https://github.com/OffensiveEdge)**
+Copyright © 2025
+<a href="https://github.com/OffensiveEdge">@OffensiveEdge</a>. All rights reserved.

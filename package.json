@@ -3,7 +3,7 @@
 	"publisher": "nolindnaidoo",
 	"displayName": "Secrets-LE",
 	"description": "Zero-Hassle Secrets Detection & Sanitization - Detect and sanitize credentials, tokens, and API keys locally — before you commit. GitGuardian-level security without ever sending data off your machine.",
-	"version": "0.1.0",
+	"version": "1.7.0",
 	"license": "MIT",
 	"author": {
 		"name": "OffensiveEdge",
@@ -304,7 +304,7 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"vscode:prepublish": "bun run build && bun run copy:i18n",
-		"package": "bun run copy:i18n && mkdir -p release && bun x vsce package --out release/${npm_package_name}-${npm_package_version}.vsix && bun run clean:i18n",
+		"package": "bun run copy:i18n && mkdir -p release && bun x vsce package --allow-package-secrets github --out release/${npm_package_name}-${npm_package_version}.vsix && bun run clean:i18n",
 		"package:ls": "vsce ls release/${npm_package_name}-${npm_package_version}.vsix --tree | cat",
 		"publish": "vsce publish"
 	},

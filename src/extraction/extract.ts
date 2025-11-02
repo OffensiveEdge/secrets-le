@@ -118,7 +118,7 @@ export function sanitizeContent(
 					const searchEnd = Math.min(line.length, column + value.length * 2);
 					const searchRegion = line.substring(searchStart, searchEnd);
 					const relativeIndex = searchRegion.indexOf(value);
-					
+
 					if (relativeIndex >= 0) {
 						valueIndex = searchStart + relativeIndex;
 					}

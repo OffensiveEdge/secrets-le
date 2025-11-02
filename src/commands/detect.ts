@@ -67,7 +67,6 @@ export function registerDetectCommand(
 			}
 
 			// Process with progress indicator
-			deps.statusBar.showProgress('Detecting secrets...');
 			try {
 				await deps.notifier.showProgress(
 					localize('runtime.detect.progress', 'Detecting secrets...'),
@@ -207,9 +206,7 @@ export function registerDetectCommand(
 						}
 					},
 				);
-				deps.statusBar.hideProgress();
 			} catch (error) {
-				deps.statusBar.hideProgress();
 				// Don't show error for user cancellation
 				if (error instanceof vscode.CancellationError) {
 					return;

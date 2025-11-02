@@ -3,9 +3,9 @@
  * Verifies that Secrets-LE can detect secrets in sample files across different file types
  */
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { detectSecretsInContent } from './extraction/extract';
 
 const SAMPLE_DIR = join(process.cwd(), 'sample');
@@ -127,7 +127,7 @@ describe('Sample Files Integration', () => {
 			// JSON format should be processed successfully
 			// Some secrets may be on multi-line JSON, but should still be detected
 			expect(typeof result.secrets.length).toBe('number');
-			
+
 			// JSON might have secrets spread across lines, so just verify processing
 			expect(result.secrets).toBeDefined();
 		});
@@ -334,4 +334,3 @@ describe('Sample Files Integration', () => {
 		});
 	});
 });
-
